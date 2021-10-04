@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Input from https://www.kaggle.com/lplenka/coco-car-damage-detection-dataset
+input/
