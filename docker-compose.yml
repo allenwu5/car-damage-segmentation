@@ -1,6 +1,6 @@
 version: "2.3"
 services:
-  detectron2:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,7 +19,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ..:/workspace
+      - .:/workspace
     environment:
       - DISPLAY=$DISPLAY
       - NVIDIA_VISIBLE_DEVICES=all
