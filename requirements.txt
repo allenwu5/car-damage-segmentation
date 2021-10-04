@@ -1,4 +1,14 @@
+# Jupyter notebook
 ipykernel
+
+# CV
 scikit-image
 
+# COCO
 git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
+
+# FastAPI
+fastapi
+uvicorn
+python-multipart
+orjson
