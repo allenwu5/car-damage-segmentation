@@ -1,29 +1,43 @@
 version: "2.3"
 services:
-  api:
+  dev:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        USER_ID: ${USER_ID:-1000}
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities:
-              - gpu
-    shm_size: "8gb"
-    ulimits:
-      memlock: -1
-      stack: 67108864
     stdin_open: true
     tty: true
     volumes:
       - .:/workspace
     environment:
-      - DISPLAY=$DISPLAY
-      - NVIDIA_VISIBLE_DEVICES=all
+      - TZ=Asia/Taipei
     command: bash
-    # Uncomment with proper source to access webcam from docker
-    # devices: 
-    #   - /dev/video0:/dev/video0
+
+  container-damage-api:
+    extends: dev
+    networks:
+      - label-studio_default
+    ports:
+      - "8001:8000"
+    command: python src/api.py
+
+  container-damage-ml-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.ml-backend
+    # ports:
+    #   - "9090:9090"
+    volumes:
+      - /home/customs/pictures/:/i680:ro
+      - .:/workspace
+    networks:
+      - label-studio_default
+    environment: 
+      - TZ=Asia/Taipei
+      - PREDICT_API_URL=http://container-damage-api:8000/container/damage
+    stdin_open: true
+    tty: true
+    command: label-studio-ml start ml_backend --debug
+
+networks:
+  label-studio_default:
+    external: true
