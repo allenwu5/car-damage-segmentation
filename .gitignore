@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 # Input from https://www.kaggle.com/lplenka/coco-car-damage-detection-dataset
-input/
+# input/
+
+# VS Code
+.vscode
